@@ -23,6 +23,13 @@ export default function NavBar() {
       >
         About
       </Link>
+      <style jsx>{`
+        nav {
+          background-color: tomato;
+          display: flex;
+          flex-direction: column;
+        }
+      `}</style>
     </nav>
   );
 }
