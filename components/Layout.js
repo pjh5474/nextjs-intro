@@ -13,11 +13,6 @@ export default function Layout({ children }) {
       <Seo title={`${headObj[router.pathname]} | NEXT Movies`} />
       <NavBar />
       <div>{children}</div>
-      <style jsx global>{`
-        a {
-          color: green;
-        }
-      `}</style>
     </>
   );
 }
