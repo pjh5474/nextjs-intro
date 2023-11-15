@@ -1,30 +1,15 @@
-import { useEffect, useState } from "react";
-
-export default function Home() {
-  const [movies, setMovies] = useState([]);
-
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZTRhMDFmMjYwMzBmZGZkMTNmYzc2YWZhZDYyNjk4NiIsInN1YiI6IjY1NTMxNTM0OTAzYzUyMDBhYzZkN2Q0ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XOXX0l8kBYL87EbbqCc4kZoBKX_LhEoDmuk3N35eq-w",
-    },
-  };
-
-  useEffect(() => {
-    (async () => {
-      const { results } = await (await fetch("/api/movies", options)).json();
-      setMovies(results);
-    })();
-  }, []);
+export default function Home({ movies }) {
   return (
     <div className="container">
       {!movies && <h3>Loading...</h3>}
       {movies?.map((movie) => (
-        <div className="movie" key={movie.id}>
-          <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
-          <h4>{movie.original_title}</h4>
+        <div className="card" key={movie.id}>
+          <div className="card-data">
+            <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+          </div>
+          <div className="card-data">
+            <h4>{movie.original_title}</h4>
+          </div>
         </div>
       ))}
       <style jsx>{`
@@ -34,26 +19,52 @@ export default function Home() {
           padding: 40px 20px;
           gap: 20px;
         }
-        .movie {
+        .card {
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-rows: 4fr 1fr;
+          gap: 5px;
+        }
+        .card-data {
           display: flex;
-          flex-direction: column;
           justify-content: center;
           align-items: center;
         }
-        .movie img {
+        .card img {
           max-width: 100%;
           border-radius: 12px;
           transition: transform 0.2s ease-in-out;
           box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
         }
-        .movie:hover img {
+        .card:hover img {
           transform: scale(1.05) translateY(-10px);
         }
-        .movie h4 {
+        .card h4 {
           font-size: 18px;
           text-align: center;
         }
       `}</style>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZTRhMDFmMjYwMzBmZGZkMTNmYzc2YWZhZDYyNjk4NiIsInN1YiI6IjY1NTMxNTM0OTAzYzUyMDBhYzZkN2Q0ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XOXX0l8kBYL87EbbqCc4kZoBKX_LhEoDmuk3N35eq-w",
+    },
+  };
+
+  const { results } = await (
+    await fetch("http://localhost:3000/api/movies", options)
+  ).json();
+
+  return {
+    props: {
+      movies: results,
+    },
+  };
 }

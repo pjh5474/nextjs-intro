@@ -9,10 +9,15 @@ export default function Layout({ children }) {
     "/about": "About",
   };
   return (
-    <>
+    <div className="container">
       <Seo title={`${headObj[router.pathname]} | NEXT Movies`} />
       <NavBar />
       <div>{children}</div>
-    </>
+      <style jsx>{`
+        .container {
+          min-width: 600px;
+        }
+      `}</style>
+    </div>
   );
 }
