@@ -5,8 +5,6 @@ export default function Movie({ movie }) {
   const router = useRouter();
   const [title, id] = router.query.params || [];
 
-  console.log(movie);
-
   return (
     <div>
       <Seo title={`${title || movie.original_title} | NEXT Movies`} />
