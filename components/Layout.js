@@ -8,7 +8,7 @@ export default function Layout({ children }) {
     "/": "Home",
     "/about": "About",
     "/movies": "Movies",
-    "/movies/[id]": "Movie",
+    "/movies/[...params]": "Movie",
   };
   return (
     <div className="body">

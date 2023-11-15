@@ -8,12 +8,12 @@ export default function Home({ movies }) {
         {movies?.map((movie) => (
           <Link
             href={{
-              pathname: `/movies/${movie.id}`,
+              pathname: `/movies/${movie.original_title}/${movie.id}`,
               query: {
                 title: movie.original_title,
               },
             }}
-            as={`/movies/${movie.id}`}
+            as={`/movies/${movie.original_title}/${movie.id}`}
             key={movie.id}
           >
             <div className="card">

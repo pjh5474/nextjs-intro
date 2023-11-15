@@ -1,13 +1,22 @@
+import Seo from "@/components/Seo";
 import { useRouter } from "next/router";
 
 export default function Movie({ movie }) {
-  console.log(movie);
   const router = useRouter();
+  const [title, id] = router.query.params || [];
 
-  return <div>{router.query.title || "Loading..."}</div>;
+  console.log(movie);
+
+  return (
+    <div>
+      <Seo title={`${title || movie.original_title} | NEXT Movies`} />
+      {title || movie.original_title || "Loading..."}
+    </div>
+  );
 }
 
-export async function getServerSideProps({ params: { id } }) {
+export async function getServerSideProps({ params }) {
+  const id = params.params[1];
   const options = {
     method: "GET",
     headers: {
