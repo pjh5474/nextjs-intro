@@ -7,14 +7,16 @@ export default function Layout({ children }) {
   const headObj = {
     "/": "Home",
     "/about": "About",
+    "/movies": "Movies",
+    "/movies/[id]": "Movie",
   };
   return (
-    <div className="container">
+    <div className="body">
       <Seo title={`${headObj[router.pathname]} | NEXT Movies`} />
       <NavBar />
       <div>{children}</div>
       <style jsx>{`
-        .container {
+        .body {
           min-width: 600px;
         }
       `}</style>

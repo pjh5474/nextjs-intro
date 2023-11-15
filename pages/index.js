@@ -1,18 +1,35 @@
+import Link from "next/link";
+
 export default function Home({ movies }) {
   return (
-    <div className="container">
-      {!movies && <h3>Loading...</h3>}
-      {movies?.map((movie) => (
-        <div className="card" key={movie.id}>
-          <div className="card-data">
-            <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
-          </div>
-          <div className="card-data">
-            <h4>{movie.original_title}</h4>
-          </div>
-        </div>
-      ))}
-      <style jsx>{`
+    <>
+      <div className="container">
+        {!movies && <h3>Loading...</h3>}
+        {movies?.map((movie) => (
+          <Link
+            href={{
+              pathname: `/movies/${movie.id}`,
+              query: {
+                title: movie.original_title,
+              },
+            }}
+            as={`/movies/${movie.id}`}
+            key={movie.id}
+          >
+            <div className="card">
+              <div className="card-data">
+                <img
+                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                />
+              </div>
+              <div className="card-data">
+                <h4>{movie.original_title}</h4>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+      <style jsx global>{`
         .container {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -24,6 +41,7 @@ export default function Home({ movies }) {
           grid-template-columns: 1fr;
           grid-template-rows: 4fr 1fr;
           gap: 5px;
+          cursor: pointer;
         }
         .card-data {
           display: flex;
@@ -43,8 +61,12 @@ export default function Home({ movies }) {
           font-size: 18px;
           text-align: center;
         }
+        a {
+          text-decoration: none;
+          color: #000;
+        }
       `}</style>
-    </div>
+    </>
   );
 }
 
